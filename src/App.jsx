@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 
+
 // Protected route wrapper
 function ProtectedRoute({ children }) {
   const { isSignedIn } = useAuth();
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <Routes>
       {/* Public Route */}
+      
       <Route
         path="/"
         element={
