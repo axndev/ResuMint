@@ -1,16 +1,127 @@
-# React + Vite
+# Resumi
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Resumi is a **resume builder web application** that allows users to create, edit, and manage resumes easily. Built with **React**, **Tailwind CSS**, and **Clerk** for authentication. Users can create resumes from scratch or upload existing ones, and all data is saved locally per user.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **User Authentication**  
+  - Sign up and log in with **Google** via Clerk.  
+  - Secure session management.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Resume Management**  
+  - Create new resumes with custom titles.  
+  - Edit existing resumes.  
+  - Delete resumes with confirmation.  
+  - Resume data stored per user in **localStorage**.
 
-## Expanding the ESLint configuration
+- **Resume Sections**  
+  - Personal Information: Name, Email, Phone, Location, LinkedIn, Website  
+  - Summary / Objective  
+  - Experience: Company, Job Title, Duration, Description  
+  - Education: School, Degree, Year, GPA  
+  - Projects  
+  - Skills
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Responsive UI**  
+  - Tailwind CSS for mobile-friendly, modern design  
+  - Interactive resume cards with colors and hover effects  
+  - Mobile-friendly edit/delete buttons
+
+- **Custom Alerts**  
+  - Top-center toast-style alerts for actions like **save, edit, delete**
+
+- **Google Authentication Only**  
+  - Users can sign up or log in with **Google OAuth**
+
+---
+
+## Tech Stack
+
+- **Frontend**: React, Tailwind CSS, Lucide React icons  
+- **Authentication**: Clerk (OAuth with Google)  
+- **State & Storage**: React state, localStorage  
+- **Routing**: React Router
+
+---
+
+## Project Structure
+```text
+src/
+├─ components/
+│  ├─ Header.jsx
+│  ├─ Footer.jsx
+│  ├─ Logo.jsx
+│  └─ Home/
+│     ├─ HeroSection.jsx
+│     ├─ Features.jsx
+│     ├─ Testimonials.jsx
+│     └─ CallToAction.jsx
+├─ pages/
+│ ├─ Dashboard.jsx
+│ ├─ Login.jsx
+│ ├─ Register.jsx
+│ └─ ResumeBuilder.jsx
+├─ App.jsx
+└─ index.jsx
+```
+
+---
+
+## Getting Started
+
+### 1. Clone the repository
+```bash
+git clone <repo-url>
+cd resumi
+```
+### 2. Install dependencies
+```bash 
+npm install
+```
+### 3. Configure Clerk
+
+Sign up at Clerk
+ and create a new application
+
+Get your Frontend API key and add it to .env:
+
+```bash
+VITE_CLERK_FRONTEND_API=<your_clerk_frontend_api>
+```
+
+### 4. Run the app
+```bash 
+npm run dev
+```
+
+Open http://localhost:5173
+ in your browser.
+
+### Usage
+
+* Register/Login using Google.
+
+* Create a Resume by clicking the Create Resume button.
+
+* Edit Resume by clicking the pencil icon.
+
+* Delete Resume by clicking the trash icon (confirmation required).
+
+* All resumes are saved per user in the browser’s localStorage.
+
+### Future Improvements
+
+* Save resumes to a database (Firebase / Supabase)
+
+* Export resumes as PDF
+
+* Add drag-and-drop ordering for sections
+
+* Add themes and templates for resumes
+
+
+### Author
+
+Kaleemullah Ahsan
