@@ -3,7 +3,7 @@ import { ArrowRight, ChevronsRight, LayoutDashboard, Star } from 'lucide-react'
 import { Link } from "react-router-dom"
 import { useUser, UserButton } from "@clerk/clerk-react";
 import { Menu, X } from "lucide-react";
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 const menuItems = [
   { name: "Home", href: "#home" },

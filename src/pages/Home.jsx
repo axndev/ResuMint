@@ -1,8 +1,8 @@
 import React from 'react'
-import HeroSection from '../components/HeroSection'
-import Features from '../components/Features'
-import Testimonials from '../components/Testimonials'
-import CallToAction from '../components/CallToAction'
+import HeroSection from '../components/Home/HeroSection'
+import Features from '../components/Home/Features'
+import Testimonials from '../components/Home/Testimonials'
+import CallToAction from '../components/Home/CallToAction'
 
 function Home() {
     return (
