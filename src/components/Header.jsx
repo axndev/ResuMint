@@ -16,7 +16,7 @@ export default function Header() {
     `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim()
 
   return (
-    <div className="b-white shadow-md relative">
+    <div className="b-white shadow relative z-10">
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 py-5 text-slate-800 transition-all">
         <Logo />
         <div className="flex items-center gap-4 text-sm">

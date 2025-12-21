@@ -32,8 +32,14 @@ export default function Dashboard() {
     const [newTitle, setNewTitle] = useState("");
     const [editingResume, setEditingResume] = useState(null);
     const [alert, setAlert] = useState(null);
+    const [visible, setVisible] = useState(false);
 
     const [deleteConfirm, setDeleteConfirm] = useState(null); // ✅ holds resume to delete
+
+    useEffect(() => {
+        document.title = 'Dashboard';
+    });
+
 
     useEffect(() => {
         if (!userId) return;
@@ -71,7 +77,7 @@ export default function Dashboard() {
     const handleSaveResume = (e) => {
         e.preventDefault();
         let updatedResumes;
-
+        setVisible(true);
         if (editingResume) {
             updatedResumes = userResumes.map((r) =>
                 r.id === editingResume.id ? { ...r, title: newTitle } : r
@@ -83,17 +89,21 @@ export default function Dashboard() {
                 title: newTitle,
                 createdAt: new Date().toISOString(),
                 data: {},
+                accent: "#3B82F6",
             };
             updatedResumes = [...userResumes, newResume];
             showAlert("success", "Created", "New resume created");
             navigate(`/app/builder/${newResume.id}`);
         }
-
+        setTimeout(() => {
+            setVisible(false);
+        }, 2000);
         localStorage.setItem(`resumes-${userId}`, JSON.stringify(updatedResumes));
         setUserResumes(updatedResumes);
         setModalOpen(false);
         setEditingResume(null);
         setNewTitle("");
+
     };
 
     return (
@@ -173,11 +183,13 @@ export default function Dashboard() {
                 </div>
             )}
             {/* Alert */}
-            <div className={`fixed ${alert ? 'top-5 opacity-100' : 'opacity-0 -top-full'} transition-all duration-300  left-1/2 transform -translate-x-1/2 w-70  bg-white flex gap-3 p-3 text-sm rounded shadow-lg`}>
-                <CheckCircle className="w-5 text-green-500" />
+            <div
+                className={`fixed alert left-1/2 -translate-x-1/2 bg-white rounded-md shadow p-4 flex gap-2
+              ${visible ? 'animate-slide-down top-2 scale-100' : '-top-30 scale-50'}`}
+            >
+                <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
                 <div>
-                    <h3 className="font-medium">{alert?.title}</h3>
-                    <p className="text-slate-500">{alert?.message}</p>
+                    <h3 className="font-medium text-sm">{alert?.title}</h3>
                 </div>
             </div>
         </div>

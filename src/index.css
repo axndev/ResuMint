@@ -5,9 +5,11 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
-body{
+
+body {
   overflow-x: hidden;
 }
+
 @theme {
   --primary: #4f46e5;
   --primary-light: #6366f1;
@@ -69,4 +71,18 @@ body{
     box-shadow: none !important;
     border: none !important;
   }
+}
+
+/* Utility classes */
+.animate-slide-down {
+  animation: slideDown 2s ease-out forwards;
+
+}
+
+.animate-slide-up {
+  animation: slideUp 3s ease-in forwards;
+}
+
+.alert {
+  transition: all .5s ease-in-out;
 }

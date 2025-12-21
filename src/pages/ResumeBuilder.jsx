@@ -38,13 +38,10 @@ export default function ResumeBuilder() {
     const { resumeId } = useParams();
     const location = useLocation();
     const [alert, setAlert] = useState(null);
-
-    const navigate = useNavigate();
-
+    const [visible, setVisible] = useState(false);
     const resumeTitle = location.state?.title || "";
-
     const [step, setStep] = useState(1);
-    const [accent, setAccent] = useState(() => localStorage.getItem("accent") || "#3B82F6");
+    const [template, setTemplate] = useState();
     const [toggleAccents, setToggleAccents] = useState(false);
 
     const [data, setData] = useState({
@@ -61,11 +58,16 @@ export default function ResumeBuilder() {
         projects: [{ name: "", projectType: "", desc: "" }],
         skills: [],
         skillInput: "",
-        createdAt: null,
+        accent: localStorage.getItem("accent") || "#3B82F6",
     });
 
     const [userResumes, setUserResumes] = useState([]);
     const previewRef = useRef();
+
+    useEffect(() => {
+        document.title = 'Editing - ' + (resumeTitle || 'Resume');
+    }, [resumeTitle]);
+
 
     // Load all user resumes
     useEffect(() => {
@@ -73,7 +75,6 @@ export default function ResumeBuilder() {
         const saved = localStorage.getItem(`resumes-${userId}`);
         const resumes = saved ? JSON.parse(saved) : [];
         setUserResumes(resumes);
-
         // If resumeId exists, load that resume for editing
         if (resumeId) {
             const resume = resumes.find(r => r.id === Number(resumeId));
@@ -115,7 +116,7 @@ export default function ResumeBuilder() {
 
         const saved = localStorage.getItem(`resumes-${userId}`);
         const resumes = saved ? JSON.parse(saved) : [];
-
+        setVisible(true);
         let newData = { ...data };
         if (!data.id) {
             // New resume
@@ -138,33 +139,13 @@ export default function ResumeBuilder() {
         setUserResumes(resumes);
 
         // Show custom alert
-        setAlert({ title: "Saved!", message: "Resume saved successfully" });
+        setAlert({ title: "Saved successfully" });
 
         // Hide after 3 seconds
-        setTimeout(() => setAlert(null), 3000);
+        setTimeout(() => {
+            setVisible(false);
+        }, 3000);
 
-    };
-
-    // Reset form for new resume
-    const createNewResume = () => {
-        setData({
-            id: null,
-            name: "",
-            email: "",
-            phone: "",
-            location: "",
-            linkedin: "",
-            website: "",
-            summary: "",
-            experience: [{ company: "", job: "", duration: "", desc: "" }],
-            education: [{ school: "", degree: "", year: "", gpa: "" }],
-            projects: [{ name: "", projectType: "", desc: "", }],
-            skills: [],
-            skillInput: "",
-            createdAt: null,
-        });
-        setStep(1);
-        navigate("/builder/new");
     };
 
     const handlePrint = () => window.print();
@@ -181,6 +162,12 @@ export default function ResumeBuilder() {
         gray: "#6B7280",
         black: "#1F2937",
     };
+
+    const handleAccentChange = (newAccent) => {
+        setData(prev => ({ ...prev, accent: newAccent })); 
+        localStorage.setItem("accent", newAccent);          
+    };
+
 
     // Scroll to top on step change
     useEffect(() => {
@@ -253,17 +240,17 @@ export default function ResumeBuilder() {
                                                 key={key}
                                                 className="flex flex-col gap-1 items-center cursor-pointer"
                                                 onClick={() => {
-                                                    setAccent(color);
+                                                    handleAccentChange(color);
                                                     setToggleAccents(false);
                                                 }}
                                             >
                                                 <li
                                                     className={`relative w-12 h-12 rounded-full
                       hover:border-2 hover:border-gray-600
-                      ${accent === color ? "border-2 border-gray-300" : ""}`}
+                      ${data.accent === color ? "border-2 border-gray-300" : ""}`}
                                                     style={{ backgroundColor: color }}
                                                 >
-                                                    {accent === color && (
+                                                    {data.accent === color && (
                                                         <Check
                                                             className="absolute inset-0 m-auto text-white w-4 h-4"
                                                         />
@@ -544,8 +531,8 @@ export default function ResumeBuilder() {
                 {/* RIGHT — PREVIEW */}
                 <div className="w-full" ref={previewRef}>
                     <div id="resume-preview" className="border border-gray-300 print:shadow-none print:border-none "><div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
-                        <header className="text-center mb-8 pb-6 border-b-2" style={{ borderColor: accent }}>
-                            <h1 className="text-3xl font-bold mb-2" style={{ color: accent }}>{data.name || "Your Name"}</h1>
+                        <header className="text-center mb-8 pb-6 border-b-2" style={{ borderColor: data.accent }}>
+                            <h1 className="text-3xl font-bold mb-2" style={{ color: data.accent }}>{data.name || "Your Name"}</h1>
                             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
                                 {data.email &&
                                     <div className="flex items-center gap-1">
@@ -566,7 +553,7 @@ export default function ResumeBuilder() {
                                     </div>
                                 }    {data.linkedin &&
                                     <div className="flex items-center gap-1">
-                                       <Linkedin className="w-4 h-4" />
+                                        <Linkedin className="w-4 h-4" />
                                         <span className="break-all">{data.linkedin}</span>
                                     </div>
                                 }    {data.website &&
@@ -579,16 +566,16 @@ export default function ResumeBuilder() {
                         </header>
                         {data.summary &&
                             <section className="mb-6">
-                                <h2 className="text-xl font-semibold mb-3" style={{ color: accent }}>PROFESSIONAL SUMMARY</h2>
+                                <h2 className="text-xl font-semibold mb-3" style={{ color: data.accent }}>PROFESSIONAL SUMMARY</h2>
                                 <p className="text-gray-700 leading-relaxed">{data.summary}</p>
                             </section>
                         }
                         {Array.isArray(data.experience) && data.experience.length > 0 &&
                             <section className="mb-6">
-                                <h2 className="text-xl font-semibold mb-4" style={{ color: accent }}>PROFESSIONAL EXPERIENCE</h2>
+                                <h2 className="text-xl font-semibold mb-4" style={{ color: data.accent }}>PROFESSIONAL EXPERIENCE</h2>
                                 <div className="space-y-4">
                                     {(data.experience || []).map((e, i) => (
-                                        <div className="border-l-3 pl-4" style={{ borderColor: accent }} key={i}>
+                                        <div className="border-l-3 pl-4" style={{ borderColor: data.accent }} key={i}>
                                             <div className="flex justify-between items-start mb-2">
                                                 <div>
                                                     <h3 className="font-semibold text-gray-900">{e.company}</h3>
@@ -607,7 +594,7 @@ export default function ResumeBuilder() {
                         }
                         {Array.isArray(data.projects) && data.projects.length > 0 &&
                             <section className="mb-6">
-                                <h2 className="text-xl font-semibold mb-4" style={{ color: accent }}>PROJECTS</h2>
+                                <h2 className="text-xl font-semibold mb-4" style={{ color: data.accent }}>PROJECTS</h2>
 
                                 {(data.projects || []).map((p, i) => (
                                     <ul key={i} className="space-y-3 ">
@@ -623,13 +610,13 @@ export default function ResumeBuilder() {
                         }
                         {Array.isArray(data.education) && data.education.length > 0 &&
                             <section className="mb-6">
-                                <h2 className="text-xl font-semibold mb-4" style={{ color: accent }}>EDUCATION</h2>
+                                <h2 className="text-xl font-semibold mb-4" style={{ color: data.accent }}>EDUCATION</h2>
                                 <div className="space-y-3">
                                     {(data.education || []).map((e, i) => (
                                         <div key={i} className="flex justify-between items-start"><div>
                                             <h3 className="font-semibold text-gray-900">{e.degree}</h3>
                                             <p className="text-gray-700">{e.school}</p>
-                                            {e.gpa && <p className="text-sm text-gray-600">GPA: {e.gpa}</p> }
+                                            {e.gpa && <p className="text-sm text-gray-600">GPA: {e.gpa}</p>}
                                         </div>
                                             <div className="text-sm text-gray-600">
                                                 <p>{e.year}</p>
@@ -641,7 +628,7 @@ export default function ResumeBuilder() {
                         }
                         {Array.isArray(data.skills) && data.skills.length > 0 &&
                             <section className="mb-6">
-                                <h2 className="text-xl font-semibold mb-4" style={{ color: accent }}>CORE SKILLS</h2>
+                                <h2 className="text-xl font-semibold mb-4" style={{ color: data.accent }}>CORE SKILLS</h2>
                                 <div className="flex gap-4 flex-wrap">
                                     {(data.skills || []).map((skill, i) => (
                                         <div key={i} className="text-gray-700">• {skill}</div>
@@ -653,15 +640,16 @@ export default function ResumeBuilder() {
                     </div>
                 </div>
             </div>
-            {alert && (
-                <div className={`fixed top-5 left-1/2 transform -translate-x-1/2 w-70 bg-white flex gap-3 p-3 text-sm rounded shadow-lg transition-all duration-300 z-50`}>
-                    <CheckCircle className="w-5 text-green-500" />
-                    <div>
-                        <h3 className="font-medium">{alert.title}</h3>
-                        <p className="text-slate-500">{alert.message}</p>
-                    </div>
+
+            <div
+                className={`fixed alert left-1/2 -translate-x-1/2 bg-white rounded-md shadow p-4 flex gap-2
+  ${visible ? 'animate-slide-down top-2 scale-100' : '-top-30 scale-50'}`}
+            >
+                <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                <div>
+                    <h3 className="font-medium text-sm">{alert?.title}</h3>
                 </div>
-            )}
+            </div>
 
         </div>
     )
@@ -685,7 +673,7 @@ const Input = ({
             </span>
         </label>}
         <input
-            value={value}
+            value={value || ''}
             onChange={(e) => onChange(e.target.value)}
             required={required}
             placeholder={placeholder} // added here
