@@ -154,15 +154,15 @@ export default function HeroSection() {
           </div>
         </nav>
       </header>
-      <svg class="size-full absolute -z-1 inset-0 blur-[1px] opacity-100" width="1440" height="720" viewBox="0 0 1440 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path stroke="#E2E8F0" stroke-opacity=".7" d="M-15.227 702.342H1439.7" />
-        <circle cx="711.819" cy="372.562" r="308.334" stroke="#E2E8F0" stroke-opacity=".7" />
-        <circle cx="16.942" cy="20.834" r="308.334" stroke="#E2E8F0" stroke-opacity=".7" />
-        <path stroke="#E2E8F0" stroke-opacity=".7" d="M-15.227 573.66H1439.7M-15.227 164.029H1439.7" />
-        <circle cx="782.595" cy="411.166" r="308.334" stroke="#E2E8F0" stroke-opacity=".7" />
+      <svg className="size-full absolute -z-1 inset-0 blur-[1px] opacity-100" width="1440" height="720" viewBox="0 0 1440 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path stroke="#E2E8F0" strokeOpacity=".7" d="M-15.227 702.342H1439.7" />
+        <circle cx="711.819" cy="372.562" r="308.334" stroke="#E2E8F0" strokeOpacity=".7" />
+        <circle cx="16.942" cy="20.834" r="308.334" stroke="#E2E8F0" strokeOpacity=".7" />
+        <path stroke="#E2E8F0" strokeOpacity=".7" d="M-15.227 573.66H1439.7M-15.227 164.029H1439.7" />
+        <circle cx="782.595" cy="411.166" r="308.334" stroke="#E2E8F0" strokeOpacity=".7" />
       </svg>
       <div id="home" className="max-w-6xl m-auto relative mt-23  flex flex-col items-center justify-center text-sm px-4 text-black">
-        <div class=" mt-14 flex flex-wrap items-center justify-center p-1.5 rounded-full  border-slate-400 text-gray-500 text-xs">
+        <div className=" mt-14 flex flex-wrap items-center justify-center p-1.5 rounded-full  border-slate-400 text-gray-500 text-xs">
           <div className="flex items-center gap-1">
             <div className="flex items-center">
               {Array(5).fill(0).map((_, i) => (
@@ -186,7 +186,7 @@ export default function HeroSection() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col md:flex-row items-center gap-4 ">
-          <Link to='/app' class="flex items-center gap-2 bg-(--primary) hover:bg-(--primary)/90 text-white active:scale-95 rounded-md px-7 h-11">
+          <Link to='/app' className="flex items-center gap-2 bg-(--primary) hover:bg-(--primary)/90 text-white active:scale-95 rounded-md px-7 h-11">
             <span>Build Resume</span>
             <ArrowRight className="w-4" />
           </Link>
