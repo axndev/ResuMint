@@ -33,9 +33,9 @@ export default function HeroSection() {
     <>
       <header className="fixed -top-3 z-50 w-full">
         <nav
-          className={`mx-auto mt-2 transition-all border-gray-200 duration-300 ${isScrolled
-            ? "max-w-5xl md:rounded-b-2xl border bg-white/70 backdrop-blur-lg shadow-md"
-            : "max-w-6xl pt-2"
+          className={`mx-auto mt-2 max-w-6xl transition-all border-gray-200 duration-300 ${isScrolled
+            ? "!max-w-5xl md:rounded-b-lg  border bg-white/70 backdrop-blur-lg shadow-md"
+            : "pt-2"
             }`}
         >
           <div className="flex items-center justify-between px-6 py-4 bg-white md:bg-transparent">
@@ -152,7 +152,7 @@ export default function HeroSection() {
         <circle cx="782.595" cy="411.166" r="308.334" stroke="#E2E8F0" stroke-opacity=".7" />
       </svg>
 
-      <div id="home" className="relative mt-23 mb-15 flex flex-col items-center justify-center text-sm px-4 md:px-16 lg:px-24 xl:px-40 text-black">
+      <div id="home" className="max-w-6xl m-auto relative mt-23  flex flex-col items-center justify-center text-sm px-4 text-black">
         <div class=" mt-14 flex flex-wrap items-center justify-center p-1.5 rounded-full  border-slate-400 text-gray-500 text-xs">
           <div className="flex items-center gap-1">
             <div className="flex items-center">
@@ -188,7 +188,7 @@ export default function HeroSection() {
         </div>
 
         <div className="border border-slate-200 mt-10 shadow-lg rounded-lg w-full overflow-hidden">
-          <img  src="/images/builder-preview.png" className="w-full" />
+          <img  src="/images/builder-preview.jpg" className="w-full" />
         </div>
       </div>
     </>

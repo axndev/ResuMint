@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom';
 import {
   Twitter,
   Linkedin,
@@ -20,24 +21,26 @@ const links = [
 ]
 
 export default function Footer() {
+  const location = useLocation();
+  const maxWidthClass = location.pathname === '/' ? 'max-w-6xl' : 'max-w-7xl';
   return (
     <footer className="relative bg-gradient-to-r from-white via-[#B3BCF9]/90 to-white">
       {/* divider */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-(--primary)/40 to-transparent" />
 
       {/* MIDDLE */}
-      <div className="mx-auto max-w-6xl px-6 pt-20 md:pb-30 pb-15">
+      <div className={`${maxWidthClass} mx-auto px-6 pt-20 md:pb-30 pb-15`}>
         <div className="grid gap-12 md:grid-cols-3">
           {/* BRAND + SOCIAL */}
           <div className="space-y-5 ">
             <div>
               <Logo />
-              <p className="mt-2 max-w-xs text-sm text-gray-500">
-                No design skills needed, just powerful tools to create resumes recruiters actually notice.
+              <p className="mt-2 max-w-xs text-sm text-gray-700">
+                No design skills needed, just powerful tool to create resumes recruiters actually notice.
               </p>
             </div>
 
-            <div className="flex gap-4 text-gray-400">
+            <div className="flex gap-4 text-gray-700">
               {[Twitter, Linkedin, Facebook, Instagram].map((Icon, i) => (
                 <a
                   key={i}
@@ -54,7 +57,7 @@ export default function Footer() {
           {/* LINKS */}
           <div className="grid grid-cols-2 gap-8 ">
             {links.map((section) => (
-              <div key={section.group} className="space-y-3 text-sm">
+              <div key={section.group} className="space-y-3">
                 <h4 className="font-medium text-gray-900">
                   {section.group}
                 </h4>
@@ -63,7 +66,7 @@ export default function Footer() {
                   <a
                     key={item}
                     href={`#${item}`}
-                    className="block text-gray-500 transition text-[13px] hover:text-black"
+                    className="block text-gray-700 transition text-[13px] hover:text-black"
                   >
                     {item}
                   </a>
@@ -73,11 +76,11 @@ export default function Footer() {
           </div>
 
           {/* NEWSLETTER (replaced Legal) */}
-          <form className="space-y-3 text-sm">
+          <form className="space-y-3">
             <label className="block font-medium text-gray-900">
               Newsletter
             </label>
-            <p className="text-gray-500">
+            <p className="text-gray-700 text-sm">
               Subscribe to our newsletter to get the latest news and updates.
             </p>
             <div className="flex items-center gap-2">
@@ -101,16 +104,16 @@ export default function Footer() {
       </div>
 
       {/* BOTTOM */}
-      
+
       <div className=" relative">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-(--primary)/40 to-transparent" />
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm">
-          <span className="text-gray-500">
+        <div className={`${maxWidthClass} mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm`}>
+          <span className="text-gray-700">
             © {new Date().getFullYear()} Resumi. All rights reserved.
           </span>
 
           {/* LEGAL LINKS */}
-          <div className="flex flex-wrap gap-4 text-gray-500">
+          <div className="flex flex-wrap gap-4 text-gray-700">
             {['License', 'Privacy', 'Cookies', 'Security'].map((item) => (
               <a
                 key={item}
