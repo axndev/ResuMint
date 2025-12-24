@@ -27,6 +27,7 @@ body {
   .highlightedText {
     @apply bg-gradient-to-r from-indigo-700 to-indigo-600 bg-clip-text text-transparent text-nowrap
   }
+
 }
 
 @keyframes marqueeScroll {
